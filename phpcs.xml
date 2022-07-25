@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer">
+    <description>The coding standard for our project.</description>
+
+    <file>app</file>
+    <file>bootstrap</file>
+    <file>config</file>
+    <file>database</file>
+    <file>resources</file>
+    <file>routes</file>
+    <file>tests</file>
+
+    <exclude-pattern>bootstrap/cache/*</exclude-pattern>
+    <exclude-pattern>bootstrap/*</exclude-pattern>
+    <exclude-pattern>resources/lang/*</exclude-pattern>
+    <exclude-pattern>config/debugbar.php</exclude-pattern>
+    <exclude-pattern>*/migrations/*</exclude-pattern>
+    <exclude-pattern>*/seeds/*</exclude-pattern>
+    <exclude-pattern>*.blade.php</exclude-pattern>
+    <exclude-pattern>*.js</exclude-pattern>
+    <exclude-pattern>app/Console/Kernel.php</exclude-pattern>
+    <exclude-pattern>app/Exceptions/Handler.php</exclude-pattern>
+    <exclude-pattern>app/Http/Middleware/(Authenticate.php|CheckForMaintenanceMode.php|VerifyCsrfToken.php|RedirectIfAuthenticated.php|TrustProxies.php)</exclude-pattern>
+
+    <rule ref="PSR2"/>
+
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="220"/>
+            <property name="absoluteLineLimit" value="220"/>
+        </properties>
+    </rule>
+
+    <!--    <rule ref="Squiz.Commenting.FunctionComment"/>-->
+    <rule ref="Generic.Commenting.Fixme"/>
+    <rule ref="Generic.Commenting.Todo"/>
+    <rule ref="Squiz.Commenting.DocCommentAlignment"/>
+    <rule ref="Squiz.Commenting.LongConditionClosingComment"/>
+    <rule ref="Squiz.Commenting.PostStatementComment"/>
+    <rule ref="PSR2.Files.ClosingTag"/>
+    <rule ref="PSR2.Files.EndFileNewline"/>
+
+    <rule ref="Squiz.NamingConventions.ValidVariableName.PrivateNoUnderscore">
+        <severity>0</severity>
+    </rule>
+
+    <!-- Ban some functions -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="sizeof" value="count"/>
+                <element key="delete" value="unset"/>
+                <element key="print" value="echo"/>
+                <element key="create_function" value="null"/>
+            </property>
+        </properties>
+    </rule>
+
+    <arg name="colors"/>
+    <arg value="p"/>
+    <ini name="memory_limit" value="512M"/>
+</ruleset>

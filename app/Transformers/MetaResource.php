@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 /**
  * @OA\Schema(
  *     properties={
- *          @OA\Property(property="code", type="integer"),
- *          @OA\Property(property="message", type="string"),
- *          @OA\Property(property="errors", type="object")
+ * @OA\Property(property="code", type="integer"),
+ * @OA\Property(property="message", type="string"),
+ * @OA\Property(property="errors", type="object")
  *     }
  * )
  */
@@ -19,23 +19,23 @@ class MetaResource extends JsonResource
     /**
      * @var int
      */
-    public $code;
+    public int $code;
 
     /**
      * @var string
      */
-    public $message;
+    public string $message;
 
     /**
      * @var array|null
      */
-    public $errors;
+    public ?array $errors;
 
     /**
      * MetaResource constructor.
-     * @param int $code
+     * @param int    $code
      * @param string $message
-     * @param null $errors
+     * @param null   $errors
      */
     public function __construct(int $code, string $message, $errors = null)
     {
@@ -46,17 +46,16 @@ class MetaResource extends JsonResource
     }
 
     /**
-     * @param $request
-     * @param int $code
+     * @param        $request
+     * @param int    $code
      * @param string $message
-     * @param null $errors
-     * @param null $pagination
+     * @param null   $errors
+     * @param null   $pagination
      * @return array
      */
     public static function makeResponse($request, int $code, string $message, $errors = null, $pagination = null): array
     {
-        $meta = new MetaPaginationResource($code, $message, $errors, $pagination);
-        return $meta->toArray($request);
+        return (new MetaPaginationResource($code, $message, $errors, $pagination))->toArray($request);
     }
 
     /**

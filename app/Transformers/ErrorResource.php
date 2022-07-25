@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 /**
  * @OA\Schema(
  *     properties={
- *          @OA\Property(
+ * @OA\Property(
  *              property="meta",
  *              ref="#/components/schemas/MetaResource"
  *          ),
@@ -16,6 +16,14 @@ use Illuminate\Http\Request;
  */
 class ErrorResource extends Resource
 {
+    /**
+     * ErrorResource contractor.
+     *
+     * @param int    $code
+     * @param string $message
+     * @param        $errors
+     * @param        $resource
+     */
     public function __construct(int $code, string $message = 'Bad request', $errors = null, $resource = null)
     {
         parent::__construct($resource, new MetaResource($code, $message, $errors));

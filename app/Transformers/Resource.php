@@ -9,9 +9,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
 abstract class Resource extends JsonResource
 {
     /**
-     * @var $meta
+     * @var MetaResource|MetaPaginationResource $meta
      */
-    protected $meta;
+    protected MetaResource|MetaPaginationResource $meta;
 
     public static $wrap = 'data';
 
@@ -26,7 +26,11 @@ abstract class Resource extends JsonResource
         parent::__construct($resource);
     }
 
-    public function getMeta() {
+    /**
+     * @return MetaPaginationResource|MetaResource
+     */
+    public function getMeta(): MetaResource|MetaPaginationResource
+    {
         return $this->meta;
     }
 
