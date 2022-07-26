@@ -78,7 +78,7 @@ return [
 
         'role_pivot_key' => null,
         'permission_pivot_key' => null,
-        
+
         /*
          * Change this if you want to name the related model primary key other than
          * `model_id`.
