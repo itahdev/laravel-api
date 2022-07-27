@@ -2,7 +2,7 @@
 
 namespace App\DTOs;
 
-interface BaseDTO
+interface BaseInterface
 {
     /**
      * Convert this object to array

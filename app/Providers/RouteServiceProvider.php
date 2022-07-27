@@ -17,24 +17,22 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+            $this->mapApiRoutes();
+            $this->mapWebRoutes();
 
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
+            $this->mapPartnerRoutes();
         });
     }
 
@@ -43,10 +41,39 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function configureRateLimiting()
+    protected function configureRateLimiting(): void
     {
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+    }
+
+    /**
+     * @return void
+     */
+    protected function mapApiRoutes(): void
+    {
+        Route::middleware('api')
+            ->prefix('api')
+            ->group(base_path('routes/api.php'));
+    }
+
+    /**
+     * @return void
+     */
+    protected function mapWebRoutes(): void
+    {
+        Route::middleware('web')
+            ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * @return void
+     */
+    protected function mapPartnerRoutes(): void
+    {
+        Route::prefix('partner-api/v1')
+            ->middleware('api')
+            ->group(base_path('modules/Partner/Routes/v1.php'));
     }
 }

@@ -36,8 +36,8 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
+        'client' => [
+            'driver' => 'jwt',
             'provider' => 'users',
         ],
     ],
@@ -60,9 +60,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'clients' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\ClientUser::class,
         ],
 
         // 'users' => [
