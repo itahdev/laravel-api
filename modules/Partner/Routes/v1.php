@@ -16,4 +16,3 @@ use Modules\Partner\Http\Controllers\V1\AuthController;
 
 /** @see AuthController::login() */
 Route::post('login', [AuthController::class, 'login']);
-

@@ -19,14 +19,14 @@ return new class extends Migration
         Schema::create(self::TABLE_NAME, static function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('client_id');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('name', 128);
             $table->string('phone_number', 13);
             $table->enum('status', UserStatus::values())->default(UserStatus::PENDING->value);
             $table->timestamps();
 
-            $table->unique(['client_id', 'email'], 'client_user_email_unique');
+            $table->index('client_id');
             $table->softDeletes();
         });
     }
