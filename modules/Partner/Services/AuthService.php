@@ -30,4 +30,14 @@ class AuthService
 
         return new AuthResponse($token);
     }
+
+    /**
+     * Logout service
+     *
+     * @return void
+     */
+    public function logout(): void
+    {
+        Auth::logout();
+    }
 }

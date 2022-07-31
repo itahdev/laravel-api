@@ -2,6 +2,7 @@
 
 namespace Modules\Partner\Http\Controllers\V1;
 
+use App\Transformers\SuccessResource;
 use Modules\Partner\Http\Controllers\Controller;
 use Modules\Partner\Http\Requests\LoginRequest;
 use Modules\Partner\Repositories\Parameters\AuthLoginParam;
@@ -54,5 +55,36 @@ class AuthController extends Controller
         $auth = $this->authService->login($params);
 
         return AuthResource::make($auth);
+    }
+
+    /**
+     * User logout
+     *
+     * @OA\Post(
+     *     path="/v1/logout",
+     *     tags={"AUTH"},
+     *     security={{"BearerAuth":{}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/AuthLogoutRequest")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful",
+     *         @OA\JsonContent(ref="#/components/schemas/SuccessResource")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *         @OA\JsonContent(ref="#/components/schemas/ErrorResource"),
+     *     )
+     * )
+     * @return SuccessResource
+     */
+    public function logout(): SuccessResource
+    {
+        $this->authService->logout();
+
+        return new SuccessResource();
     }
 }
