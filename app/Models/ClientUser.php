@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\UserStatus;
 use App\Models\Relationships\ClientUserRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -36,6 +37,13 @@ class ClientUser extends Authenticatable implements JWTSubject
      */
     protected $hidden = [
         'password',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'status' => UserStatus::class,
     ];
 
     /**

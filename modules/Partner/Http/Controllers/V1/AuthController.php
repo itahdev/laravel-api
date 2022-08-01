@@ -66,7 +66,6 @@ class AuthController extends Controller
      *     security={{"BearerAuth":{}}},
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/AuthLogoutRequest")
      *     ),
      *     @OA\Response(
      *         response=200,
