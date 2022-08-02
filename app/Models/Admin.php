@@ -2,19 +2,20 @@
 
 namespace App\Models;
 
-use App\Enums\UserStatus;
 use App\Models\Relationships\ClientUserRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 /**
- * @property UserStatus $status
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $phone_number
  */
-class ClientUser extends Authenticatable implements JWTSubject
+class Admin extends Authenticatable
 {
     use HasApiTokens,
         HasFactory,
@@ -32,7 +33,6 @@ class ClientUser extends Authenticatable implements JWTSubject
         'email',
         'password',
         'phone_number',
-        'status',
     ];
 
     /**
@@ -43,31 +43,4 @@ class ClientUser extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
     ];
-
-    /**
-     * @var string[]
-     */
-    protected $casts = [
-        'status' => UserStatus::class,
-    ];
-
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
-    public function getJWTIdentifier(): mixed
-    {
-        return $this->getKey();
-    }
-
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
-    public function getJWTCustomClaims(): array
-    {
-        return [];
-    }
 }

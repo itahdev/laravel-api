@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\Guard;
+
 return [
 
     /*
@@ -14,8 +16,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'client',
-        'passwords' => 'clients',
+        'guard' => Guard::CLIENT->value,
+        'passwords' => Guard::provider(Guard::CLIENT),
     ],
 
     /*
@@ -36,9 +38,13 @@ return [
     */
 
     'guards' => [
-        'client' => [
+        Guard::CLIENT->value => [
             'driver' => 'jwt',
-            'provider' => 'clients',
+            'provider' => Guard::provider(Guard::CLIENT),
+        ],
+        Guard::ADMIN->value => [
+            'driver' => 'token',
+            'provider' => Guard::provider(Guard::ADMIN),
         ],
     ],
 
@@ -60,15 +66,15 @@ return [
     */
 
     'providers' => [
-        'clients' => [
+        Guard::provider(Guard::CLIENT) => [
             'driver' => 'eloquent',
-            'model' => App\Models\ClientUser::class,
+            'model' => Guard::model(Guard::CLIENT),
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        Guard::provider(Guard::ADMIN) => [
+            'driver' => 'eloquent',
+            'model' => Guard::model(Guard::ADMIN),
+        ],
     ],
 
     /*
@@ -87,8 +93,14 @@ return [
     */
 
     'passwords' => [
-        'clients' => [
-            'provider' => 'clients',
+        Guard::provider(Guard::CLIENT) => [
+            'provider' => Guard::provider(Guard::CLIENT),
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        Guard::provider(Guard::ADMIN) => [
+            'provider' => Guard::provider(Guard::ADMIN),
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

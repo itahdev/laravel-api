@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Partner\Services;
+namespace Modules\Admin\Services;
 
-use App\Enums\UserStatus;
 use App\Exceptions\ApiException;
-use App\Models\ClientUser;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
-use Modules\Partner\DTOs\AuthResponse;
-use Modules\Partner\Repositories\Parameters\AuthLoginParam;
+use Illuminate\Support\Facades\Hash;
+use Modules\Admin\DTOs\AuthResponse;
+use Modules\Admin\Repositories\Parameters\AuthLoginParam;
 
 class AuthService
 {
@@ -19,16 +19,14 @@ class AuthService
      */
     public function login(AuthLoginParam $param): AuthResponse
     {
-        $token = Auth::attempt($param->toArray());
-        if (!$token) {
+        /** @var Admin $admin */
+        $admin = Admin::query()->where('email', $param->email)->first();
+
+        if (!$admin || !Hash::check($param->password, $admin->password)) {
             throw ApiException::forbidden(__('auth.failed'));
         }
 
-        /** @var ClientUser $user */
-        $user = Auth::user();
-        if (!$user || $user->status === UserStatus::INACTIVE) {
-            throw ApiException::forbidden(trans('exceptions.account_inactive'));
-        }
+        $token = $admin->createToken($param->device_name)->plainTextToken;
 
         return new AuthResponse($token);
     }

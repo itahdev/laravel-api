@@ -33,6 +33,7 @@ class RouteServiceProvider extends ServiceProvider
             $this->mapWebRoutes();
 
             $this->mapPartnerRoutes();
+            $this->mapAdminRoutes();
         });
     }
 
@@ -75,5 +76,15 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('partner-api/v1')
             ->middleware('api')
             ->group(base_path('modules/Partner/Routes/v1.php'));
+    }
+
+    /**
+     * @return void
+     */
+    protected function mapAdminRoutes(): void
+    {
+        Route::prefix('admin-api/v1')
+            ->middleware('admin')
+            ->group(base_path('modules/Admin/Routes/v1.php'));
     }
 }

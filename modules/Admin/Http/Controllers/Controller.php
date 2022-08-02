@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Partner\Http\Controllers;
+namespace Modules\Admin\Http\Controllers;
 
 use App\Enums\Guard;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -34,6 +34,6 @@ class Controller extends BaseController
      */
     public function __construct()
     {
-        Auth::setDefaultDriver(Guard::CLIENT->value);
+        Auth::setDefaultDriver(Guard::ADMIN->value);
     }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Partner\Http\Controllers\V1;
+namespace Modules\Admin\Http\Controllers\V1;
 
 use App\Transformers\SuccessResource;
-use Modules\Partner\Http\Controllers\Controller;
-use Modules\Partner\Http\Requests\LoginRequest;
-use Modules\Partner\Repositories\Parameters\AuthLoginParam;
-use Modules\Partner\Services\AuthService;
-use Modules\Partner\Transformers\AuthResource;
+use Modules\Admin\Http\Controllers\Controller;
+use Modules\Admin\Http\Requests\LoginRequest;
+use Modules\Admin\Repositories\Parameters\AuthLoginParam;
+use Modules\Admin\Services\AuthService;
+use Modules\Admin\Transformers\AuthResource;
 
 class AuthController extends Controller
 {
@@ -52,7 +52,9 @@ class AuthController extends Controller
         $params = new AuthLoginParam(
             $request->input('email'),
             $request->input('password'),
+            $request->input('device_name'),
         );
+
         $auth = $this->authService->login($params);
 
         return AuthResource::make($auth);
