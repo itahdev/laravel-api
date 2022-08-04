@@ -54,6 +54,17 @@ services:
         ports:
             - "${EXTERNAL_REDIS_PORT-6379}:6379"
 
+    meilisearch:
+        image: metamehta/meilisearch-arm64
+        ports:
+            - "${EXTERNAL_MEILISEARCH_PORT:-7700}:7700"
+#        environment:
+#            MEILI_MASTER_KEY: ${MEILISEARCH_KEY}
+        volumes:
+            - sailmeilisearch:/data.ms
+
 volumes:
     db:
+        driver: local
+    sailmeilisearch:
         driver: local
