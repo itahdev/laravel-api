@@ -9,6 +9,7 @@
         "darkaonline/l5-swagger": "^8.3",
         "guzzlehttp/guzzle": "^7.2",
         "http-interop/http-factory-guzzle": "^1.2",
+        "laravel/cashier": "^13.14",
         "laravel/framework": "^9.21",
         "laravel/sanctum": "^3.0",
         "laravel/scout": "^9.4",
