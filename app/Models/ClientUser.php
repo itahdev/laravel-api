@@ -14,6 +14,7 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @property UserStatus $status
+ * @property Channel    $channel
  */
 class ClientUser extends Authenticatable implements JWTSubject
 {

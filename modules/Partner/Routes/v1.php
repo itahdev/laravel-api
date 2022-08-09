@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Partner\Http\Controllers\V1\AuthController;
+use Modules\Partner\Http\Controllers\V1\ChannelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +19,6 @@ use Modules\Partner\Http\Controllers\V1\AuthController;
 Route::post('login', [AuthController::class, 'login']);
 /** @see AuthController::logout() */
 Route::post('logout', [AuthController::class, 'logout']);
+
+/** @see ChannelController::logout() */
+Route::post('channels', [ChannelController::class, 'store']);
