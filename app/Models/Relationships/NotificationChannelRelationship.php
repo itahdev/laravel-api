@@ -5,7 +5,7 @@ namespace App\Models\Relationships;
 use App\Models\ClientUser;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-trait ChannelRelationship
+trait NotificationChannelRelationship
 {
     /**
      * @return BelongsTo

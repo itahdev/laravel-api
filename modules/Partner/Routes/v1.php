@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Partner\Http\Controllers\V1\AuthController;
-use Modules\Partner\Http\Controllers\V1\ChannelController;
+use Modules\Partner\Http\Controllers\V1\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +17,15 @@ use Modules\Partner\Http\Controllers\V1\ChannelController;
 
 /** @see AuthController::login() */
 Route::post('login', [AuthController::class, 'login']);
-/** @see AuthController::logout() */
-Route::post('logout', [AuthController::class, 'logout']);
 
-/** @see ChannelController::logout() */
-Route::post('channels', [ChannelController::class, 'store']);
+Route::group(['middleware' => 'auth:client'], static function () {
+    /** @see AuthController::logout() */
+    Route::post('logout', [AuthController::class, 'logout']);
+
+    /** @see UserController::token() */
+    Route::post('users/token', [UserController::class, 'token']);
+
+    /** @see UserController::notify() */
+    Route::post('users/notify', [UserController::class, 'notify']);
+});
+

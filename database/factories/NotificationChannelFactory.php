@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\Channel;
+use App\Models\NotificationChannel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends Factory<Channel>
+ * @extends Factory<NotificationChannel>
  */
-class ChannelFactory extends Factory
+class NotificationChannelFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,9 +19,8 @@ class ChannelFactory extends Factory
     public function definition(): array
     {
         return [
-            'device_id' => Str::random(),
-            'device_os' => 'Iphone',
-            'fcm_token' => Str::random(64),
+            'device_type' => 'Iphone',
+            'device_token' => Str::random(64),
         ];
     }
 }

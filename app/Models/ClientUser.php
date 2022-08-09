@@ -13,8 +13,8 @@ use Laravel\Scout\Searchable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 /**
- * @property UserStatus $status
- * @property Channel    $channel
+ * @property UserStatus          $status
+ * @property NotificationChannel $channel
  */
 class ClientUser extends Authenticatable implements JWTSubject
 {

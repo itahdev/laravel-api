@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\Relationships\ChannelRelationship;
+use App\Models\Relationships\NotificationChannelRelationship;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $fcm_token
  */
-class Channel extends Model
+class NotificationChannel extends Model
 {
-    use ChannelRelationship,
+    use NotificationChannelRelationship,
         HasFactory;
 
     /**

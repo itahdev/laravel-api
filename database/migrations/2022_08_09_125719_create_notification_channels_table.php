@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public const TABLE_NAME = 'channels';
+    public const TABLE_NAME = 'notification_channels';
 
     /**
      * Run the migrations.
@@ -18,9 +18,9 @@ return new class extends Migration
         Schema::create(self::TABLE_NAME, function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('client_user_id');
-            $table->string('device_id');
-            $table->string('device_os');
-            $table->string('fcm_token');
+            $table->string('device_token');
+            $table->string('device_type');
+            $table->timestamp('user_last_login_at')->nullable();
             $table->timestamps();
             $table->index('client_user_id');
         });

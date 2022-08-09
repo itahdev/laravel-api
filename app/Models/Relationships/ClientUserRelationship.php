@@ -2,8 +2,8 @@
 
 namespace App\Models\Relationships;
 
-use App\Models\Channel;
 use App\Models\Client;
+use App\Models\NotificationChannel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -20,8 +20,8 @@ trait ClientUserRelationship
     /**
      * @return HasOne
      */
-    public function channel(): HasOne
+    public function notificationChannel(): HasOne
     {
-        return $this->hasOne(Channel::class, 'client_user_id');
+        return $this->hasOne(NotificationChannel::class);
     }
 }
