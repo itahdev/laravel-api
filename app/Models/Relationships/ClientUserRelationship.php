@@ -10,7 +10,7 @@ trait ClientUserRelationship
     /**
      * @return BelongsTo
      */
-    public function clientUser(): BelongsTo
+    public function client(): BelongsTo
     {
         return $this->belongsTo(Client::class);
     }

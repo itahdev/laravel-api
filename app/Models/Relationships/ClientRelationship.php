@@ -10,7 +10,7 @@ trait ClientRelationship
     /**
      * @return HasMany
      */
-    public function clientUser(): HasMany
+    public function clientUsers(): HasMany
     {
         return $this->hasMany(ClientUser::class);
     }
