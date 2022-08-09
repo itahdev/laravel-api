@@ -2,7 +2,7 @@
 
 namespace Modules\Partner\Services;
 
-use Modules\Partner\DTOs\AuthResponse;
+use App\Notifications\ChannelNotification;
 use Modules\Partner\Repositories\ClientUserRepository;
 
 class ChannelService
@@ -20,12 +20,13 @@ class ChannelService
      *
      * @param int         $userId
      * @param string|null $message
-     * @return AuthResponse
+     * @return void
      */
-    public function singleNotify(int $userId, ?string $message = null): AuthResponse
+    public function singleNotify(int $userId, ?string $message = null): void
     {
         $user = $this->userRepository->findOrFailById($userId);
         $token = $user->channel->fcm_token;
-        dd($token);
+
+        $user->notify(new ChannelNotification($token, $token));
     }
 }
