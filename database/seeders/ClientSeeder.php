@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\NotificationChannel;
 use Database\Seeders\Traits\TruncateTable;
 use App\Models\Client;
 use App\Models\ClientUser;
@@ -28,7 +29,7 @@ class ClientSeeder extends Seeder
             ->has(ClientUser::factory([
                 'email' => 'client@example.com',
                 'password' => bcrypt('password')
-            ]))
+            ])->has(NotificationChannel::factory()))
             ->create();
     }
 }
