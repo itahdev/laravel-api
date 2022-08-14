@@ -30,6 +30,7 @@ class ClientUser extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
+        'client_id',
         'name',
         'email',
         'password',

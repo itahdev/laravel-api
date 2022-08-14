@@ -33,9 +33,15 @@ RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/local/bin --filename=composer
 
 # Set new UID for user www-data
-# RUN usermod -u 1000 www-data
+RUN usermod -u 1000 www-data
 
-WORKDIR /var/www/
+WORKDIR /var/www/html
 COPY . .
+
+RUN rm -rf ./storage/logs/laravel*
+RUN chmod -R 777 storage
+
+RUN composer install
+
 EXPOSE 9000
 CMD ["php-fpm"]

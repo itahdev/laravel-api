@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\UserStatus;
 use App\Models\ClientUser;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends Factory<ClientUser>
@@ -20,7 +21,7 @@ class ClientUserFactory extends Factory
     {
         return [
             'name' => fake()->name,
-            'email' => fake()->email,
+            'email' => Str::random(64),
             'password' => bcrypt('password'),
             'phone_number' => fake()->e164PhoneNumber,
             'status' => UserStatus::ACTIVE,

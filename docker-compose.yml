@@ -1,70 +1,59 @@
 version: "3.7"
 services:
-    php:
-        build:
-            context: ./
-            dockerfile: deployment/docker/Dockerfile
-        volumes:
-            - .:/var/www
-            - ./deployment/docker/php.ini:/usr/local/etc/php/conf.d/php.ini
-        links:
-            - mysql
-            - redis
+  php:
+    build:
+      context: ./
+      dockerfile: deployment/docker/Dockerfile
+    volumes:
+      - .:/var/www/html
+      - ./deployment/docker/php.ini:/usr/local/etc/php/conf.d/php.ini
+    links:
+      - mysql
+      - redis
 
-    php-batch:
-        build:
-            context: .
-            dockerfile: deployment/docker/Dockerfile.phpbatch
-        volumes:
-            - .:/var/www
-        links:
-            - mysql
-            - redis
-    nginx:
-        build:
-            context: .
-            dockerfile: deployment/docker/Dockerfile.nginx
-            args:
-                PHP_FPM_SERVER: php
-                PHP_FPM_PORT: 9000
-        links:
-            - php
-        depends_on:
-            - php
-        ports:
-            - "${EXTERNAL_NGINX_PORT-8000}:80"
-        volumes:
-            - .:/var/www
+  php-batch:
+    build:
+      context: .
+      dockerfile: deployment/docker/Dockerfile.phpbatch
+    volumes:
+      - .:/var/www/html
+    links:
+      - mysql
+      - redis
+  nginx:
+    build:
+      context: .
+      dockerfile: deployment/docker/Dockerfile.nginx
+      args:
+        PHP_FPM_SERVER: php
+        PHP_FPM_PORT: 9000
+    links:
+      - php
+    depends_on:
+      - php
+    ports:
+      - "${EXTERNAL_NGINX_PORT-8000}:80"
+    volumes:
+      - .:/var/www/html
 
-    mysql:
-        image: mysql:latest
-        command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-        ports:
-            - "${EXTERNAL_DB_PORT-3306}:3306"
-        environment:
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-            MYSQL_USER: ${DB_USERNAME}
-        volumes:
-            - db:/var/lib/mysql
+  mysql:
+    image: mysql:latest
+    command: mysqld --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "${EXTERNAL_DB_PORT-3311}:3306"
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+    volumes:
+      - db:/var/lib/mysql
 
-    redis:
-        image: redis
-        ports:
-            - "${EXTERNAL_REDIS_PORT-6379}:6379"
-
-    meilisearch:
-        image: metamehta/meilisearch-arm64
-        ports:
-            - "${EXTERNAL_MEILISEARCH_PORT:-7700}:7700"
-#        environment:
-#            MEILI_MASTER_KEY: ${MEILISEARCH_KEY}
-        volumes:
-            - sailmeilisearch:/data.ms
+  redis:
+    image: redis
+    ports:
+      - "${EXTERNAL_REDIS_PORT-6380}:6379"
 
 volumes:
-    db:
-        driver: local
-    sailmeilisearch:
-        driver: local
+  db:
+    driver: local

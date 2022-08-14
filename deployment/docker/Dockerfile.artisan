@@ -16,8 +16,6 @@ RUN apt-get update && apt-get install -y \
     unzip \
     git \
     curl \
-    cron \
-    supervisor \
     libsodium-dev \
     pkg-config
 
@@ -30,6 +28,7 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install sodium
 RUN docker-php-ext-install zip
+
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/local/bin --filename=composer
 
@@ -38,11 +37,11 @@ RUN usermod -u 1000 www-data
 
 WORKDIR /var/www/html
 COPY . .
-COPY deployment/docker/supervisord.conf /etc/supervisor/
 
 RUN rm -rf ./storage/logs/laravel*
 RUN chmod -R 777 storage
 
 RUN composer install
 
-CMD ["/usr/bin/supervisord"]
+EXPOSE 9000
+CMD ["sh", "artisan-command.sh"]

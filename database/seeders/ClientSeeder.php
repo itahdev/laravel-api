@@ -23,12 +23,8 @@ class ClientSeeder extends Seeder
             'client_users',
         ]);
 
-        Client::factory(1)
-            ->has(ClientUser::factory(50))
-            ->has(ClientUser::factory([
-                'email' => 'client@example.com',
-                'password' => bcrypt('password')
-            ]))
+        Client::factory(20)
+            ->has(ClientUser::factory(1000))
             ->create();
     }
 }
