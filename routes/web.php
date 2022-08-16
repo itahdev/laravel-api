@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UploadFileController;
 use App\Transformers\SuccessResource;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', static function () {
     return SuccessResource::make();
 });
+
+Route::get('upload', [UploadFileController::class, 'index']);
+Route::post('upload', [UploadFileController::class, 'store'])->name('upload.file');
