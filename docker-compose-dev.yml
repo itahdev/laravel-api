@@ -7,8 +7,6 @@ services:
         volumes:
             - .:/var/www
             - ./deployment/docker/php.ini:/usr/local/etc/php/conf.d/php.ini
-        links:
-            - mysql
     nginx:
         build:
             context: .
@@ -24,7 +22,3 @@ services:
             - "${EXTERNAL_NGINX_PORT-8000}:80"
         volumes:
             - .:/var/www
-
-volumes:
-    db:
-        driver: local
