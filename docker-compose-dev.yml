@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+    php:
+        build:
+            context: ./
+            dockerfile: deployment/docker/Dockerfile
+        volumes:
+            - .:/var/www
+            - ./deployment/docker/php.ini:/usr/local/etc/php/conf.d/php.ini
+        links:
+            - mysql
+    nginx:
+        build:
+            context: .
+            dockerfile: deployment/docker/Dockerfile.nginx
+            args:
+                PHP_FPM_SERVER: php
+                PHP_FPM_PORT: 9000
+        links:
+            - php
+        depends_on:
+            - php
+        ports:
+            - "${EXTERNAL_NGINX_PORT-8000}:80"
+        volumes:
+            - .:/var/www
+
+volumes:
+    db:
+        driver: local
