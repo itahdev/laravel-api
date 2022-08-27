@@ -3,11 +3,14 @@
 namespace Modules\Partner\Http\Controllers\V1;
 
 use App\Transformers\SuccessResource;
+use Laravel\Socialite\Facades\Socialite;
 use Modules\Partner\Http\Controllers\Controller;
 use Modules\Partner\Http\Requests\LoginRequest;
+use Modules\Partner\Http\Requests\LoginSocialRequest;
 use Modules\Partner\Repositories\Parameters\AuthLoginParam;
 use Modules\Partner\Services\AuthService;
 use Modules\Partner\Transformers\AuthResource;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class AuthController extends Controller
 {
@@ -54,6 +57,27 @@ class AuthController extends Controller
             $request->input('password'),
         );
         $auth = $this->authService->login($params);
+
+        return AuthResource::make($auth);
+    }
+
+    /**
+     * @param string $provider
+     * @return RedirectResponse
+     */
+    public function redirectToProvider(string $provider): RedirectResponse
+    {
+        return $this->authService->redirect($provider);
+    }
+
+    /**
+     * @param LoginSocialRequest $request
+     * @param string             $provider
+     * @return AuthResource
+     */
+    public function socialLogin(LoginSocialRequest $request, string $provider): AuthResource
+    {
+        $auth = $this->authService->socialLogin($request, $provider);
 
         return AuthResource::make($auth);
     }
