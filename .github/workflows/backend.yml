@@ -8,9 +8,9 @@ on:
       - feature/*
 jobs:
   unit:
-    runs-on: self-hosted
+    runs-on: [self-hosted, macOs, ARM64]
     steps:
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@v2.25.2
         with:
           php-version: '8.1'
           extensions: pdo_mysql, mbstring, exif, pcntl, bcmath, zip, gd, sodium
