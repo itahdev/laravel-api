@@ -8,24 +8,21 @@ on:
       - feature/*
 jobs:
   unit:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
           extensions: pdo_mysql, mbstring, exif, pcntl, bcmath, zip, gd, sodium
-#        env:
-#          runner: self-hosted
-      - uses: shogo82148/actions-setup-redis@v1
-        with:
-          redis-version: '5.0.6'
+        env:
+          runner: self-hosted
       - uses: actions/checkout@v2
 
       - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.testing', '.env');"
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
 
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+        run: composer require algolia/algoliasearch-client-php && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Create Database
         env:
@@ -35,7 +32,7 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
           php artisan migrate
-          php artisan db:seed
+#          php artisan db:seed
 
       - name: Execute tests
         env:
