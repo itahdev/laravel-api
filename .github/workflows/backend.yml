@@ -8,7 +8,7 @@ on:
       - feature/*
 jobs:
   unit:
-    runs-on: [self-hosted, macOs, ARM64]
+    runs-on: self-hosted
     steps:
       - uses: shivammathur/setup-php@v2.25.2
         with:
